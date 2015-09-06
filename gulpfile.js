@@ -11,6 +11,7 @@ var uglify      = require('gulp-uglify');
 var minifyCSS   = require('gulp-minify-css');
 var browserify  = require('browserify');
 var source      = require('vinyl-source-stream');
+var buffer		= require('vinyl-buffer');
 var concat      = require('gulp-concat');
 var watch       = require('gulp-watch');
 
@@ -81,10 +82,11 @@ gulp.task('browserifyDist', function() {
 	return browserify({ entries: ['app/js/app.js'] })
 		.bundle()
 		.pipe(source('bundled.js'))
-		// .pipe(uglify({
-		// 	// inSourceMap:
-		// 	// outSourceMap: "app.js.map"
-		// }))
+		.pipe(buffer())
+		.pipe(uglify({
+			// inSourceMap:
+			// outSourceMap: "app.js.map"
+		}))
 		.pipe(gulp.dest('./dist/js'));
 });
 
