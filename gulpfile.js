@@ -14,6 +14,7 @@ var source      = require('vinyl-source-stream');
 var buffer		= require('vinyl-buffer');
 var concat      = require('gulp-concat');
 var watch       = require('gulp-watch');
+var connect 	= require('gulp-connect');
 
 
 
@@ -60,6 +61,14 @@ gulp.task('copy-html-files', function () {
 	.pipe(gulp.dest('./dist/'));
 });
 
+gulp.task('connect', function() {
+	connect.server({
+		root: 'app',
+			livereload: true
+	  	});
+});
+
+
 
 // gulp.task('browserify', function() {
 //   gulp.src(['app/js/app.js'])
@@ -105,7 +114,7 @@ gulp.task('browserifyDist', function() {
 //   .pipe(gulp.dest('./dist/js'))
 // });
 
-gulp.task('watch', ['lint', 'browserify', 'sass'], function() {
+gulp.task('watch', ['lint', 'browserify', 'sass', 'connect'], function() {
 
 	var watcher = gulp.watch(['app/js/app.js', 'app/js/controllers/*.js'], ['lint','browserify']);
 	watcher.on('change', function (event) {
