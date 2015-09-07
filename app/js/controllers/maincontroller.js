@@ -13,6 +13,7 @@ module.exports = function($scope, $http) {
 	console.log("successfully required!");
 
 	var baseURL = "http://boundaries.tribapps.com/1.0/boundary/?";
+	var jsonpFormat = "&format=jsonp&callback=JSON_CALLBACK";
 
 
 	$scope.getLocation = function(){
@@ -34,6 +35,8 @@ module.exports = function($scope, $http) {
 		console.log("longitude: " + $scope.lat);
 		console.log("latitude: " + $scope.lng);
 
+		requestLocationInfo($scope.lat, $scope.lng);
+
 	};
 
 
@@ -42,32 +45,10 @@ module.exports = function($scope, $http) {
 		console.log(error);
 	};
 
-
-
-	// function getLocation() {
-	// 	console.log("getting location");
-	//     if (navigator.geolocation) {
-	//     	console.log("location get?");
-	//         navigator.geolocation.getCurrentPosition(function(position){
-	//         	console.log("location got");
-	//         });
-	        
-	//     } else {
-	//         console.log("Geolocation is not supported by this browser.");
-	//     }
-	// }
-	
-	// function showPosition(position) {
-		
-	//    	console.log("longitude: " + position.coords.longitude);
-	//    	console.log("latitude: " + position.coords.latitude);
-	//    	requestLocationInfo();
-	// }
-
-
-	function requestLocationInfo(){
+	function requestLocationInfo(latitude, longitude){
 		// Simple GET request example :
-		$http.jsonp('http://boundaries.tribapps.com/1.0/boundary/?contains=42.02515940000001,-87.6902389&format=jsonp&callback=JSON_CALLBACK').
+		// 'http://boundaries.tribapps.com/1.0/boundary/?contains=42.02515940000001,-87.6902389&format=jsonp&callback=JSON_CALLBACK'
+		$http.jsonp(baseURL + "contains=" + latitude + "," + longitude + jsonpFormat).
 		  	then(function(response) {
 		  		$scope.locationData = response;
 		  		console.log($scope.locationData);
