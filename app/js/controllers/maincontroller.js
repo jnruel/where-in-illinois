@@ -50,9 +50,9 @@ module.exports = function($scope, $http) {
 		// 'http://boundaries.tribapps.com/1.0/boundary/?contains=42.02515940000001,-87.6902389&format=jsonp&callback=JSON_CALLBACK'
 		$http.jsonp(baseURL + "contains=" + latitude + "," + longitude + jsonpFormat).
 		  	then(function(response) {
-		  		$scope.locationData = response;
+		  		$scope.locationData = response.data.objects;
 		  		console.log($scope.locationData);
-		  		console.log($scope.locationData.data.objects[0].name);
+		  		console.log($scope.locationData[0].name);
 
 				// this callback will be called asynchronously
 				// when the response is available
