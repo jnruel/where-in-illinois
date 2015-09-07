@@ -1,6 +1,4 @@
 module.exports = function($scope, $http) {
-	$scope.test = "Testing...1,2,3";
-	$scope.result = "";
 	$scope.locationData = [];
 
 
@@ -46,8 +44,6 @@ module.exports = function($scope, $http) {
 	};
 
 	function requestLocationInfo(latitude, longitude){
-		// Simple GET request example :
-		// 'http://boundaries.tribapps.com/1.0/boundary/?contains=42.02515940000001,-87.6902389&format=jsonp&callback=JSON_CALLBACK'
 		$http.jsonp(baseURL + "contains=" + latitude + "," + longitude + jsonpFormat).
 		  	then(function(response) {
 		  		$scope.locationData = response.data.objects;
