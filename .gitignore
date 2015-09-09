@@ -2,7 +2,7 @@
 node_modules/
 app/js/bundled.js
 app/styles/*.css
-app/bower_components/
+bower_components/
 npm-debug.log
 .DS_Store
 dist
