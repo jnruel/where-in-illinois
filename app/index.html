@@ -10,17 +10,23 @@
 		<link rel="stylesheet" href="styles/vendor.css"/>
 		<link rel="stylesheet" href="styles/main.css"/>
 		<!-- scripts -->
-		<script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
 		<script src="js/bundled.js"></script>
 	</head>
 
 	<body ng-controller="MainController">
 
-		<div id="main">
-			<ul id="list">
-				<li ng-repeat="obj in locationData">{{obj.name}}</li>
-			</ul>
+		<div class="container">
+			<div class="row" ng-repeat="obj in locationData">
+				<div class=" kind three columns">{{obj.kind}}:</div>
+				<div class="nine columns">{{obj.name}}</div>
+			</div>
+
+
+			<!-- <ul id="list">
+				<li ng-repeat="obj in locationData">
+					<span class="kind">{{obj.kind}}:</span> <h3 class="name">{{obj.name}}</h3>
+				</li>
+			</ul> -->
 		</div>
 
 

@@ -15,9 +15,6 @@ var concat      = require('gulp-concat');
 var watch       = require('gulp-watch');
 var connect 	= require('gulp-connect');
 
-
-
-
 // tasks
 
 //delete dist folder before updating
