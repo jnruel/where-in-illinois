@@ -3,7 +3,6 @@ var gulp = require('gulp');
 
 
 // plugins
-// var connect = require('gulp-connect');
 var del         = require('del');
 var sass        = require('gulp-ruby-sass');
 var jshint      = require('gulp-jshint');
@@ -28,7 +27,7 @@ gulp.task('clean', function(){
 
 //lint js scripts
 gulp.task('lint', function() {
-  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/bundled.js'])
+  gulp.src(['./app/**/*.js', '!./app/js/bundled.js'])
 	.pipe(jshint())
 	.pipe(jshint.reporter('default'))
 	.pipe(jshint.reporter('fail'));
@@ -45,7 +44,6 @@ gulp.task('minify-css', ['copy-vendor-css', 'sass'], function() {
 		.pipe(concat('vendor.css'))
 		.pipe(minifyCSS(opts))
 		.pipe(gulp.dest('./dist/styles'));
-
 });
 
 gulp.task('sass', function () {
@@ -56,19 +54,13 @@ gulp.task('sass', function () {
 		.pipe(gulp.dest('./app/styles/'));
 });
 
-
-gulp.task('copy-bower-components', function () {
-	gulp.src('./app/bower_components/**')
-	.pipe(gulp.dest('dist/bower_components'));
-});
-
 gulp.task('copy-vendor-css', function(){
-	gulp.src(['./node_modules/angular-loading-bar/src/loading-bar.css'])
+	gulp.src(['./bower_components/normalize.css/normalize.css', './node_modules/angular-loading-bar/src/loading-bar.css'])
 	.pipe(gulp.dest('dist/styles/vendors'));
 });
 
 gulp.task('concat-vendor-css', function(){
-	gulp.src(['./node_modules/angular-loading-bar/src/loading-bar.css'])
+	gulp.src(['./bower_components/normalize.css/normalize.css', './node_modules/angular-loading-bar/src/loading-bar.css'])
 	.pipe(concat('vendor.css'))
 	.pipe(gulp.dest('./app/styles'));
 });
@@ -86,16 +78,6 @@ gulp.task('connect', function() {
 });
 
 
-
-// gulp.task('browserify', function() {
-//   gulp.src(['app/js/app.js'])
-//   .pipe(browserify({
-//  insertGlobals: true,
-//  debug: true
-//   }))
-//   .pipe(concat('bundled.js'))
-//   .pipe(gulp.dest('./app/js'))
-// });
 
 gulp.task('browserify', function() {
 	return browserify({ entries: ['app/js/app.js'] })
@@ -117,19 +99,18 @@ gulp.task('browserifyDist', function() {
 });
 
 
-// gulp.task('browserifyDist', function() {
-//   gulp.src(['app/js/app.js'])
-//   .pipe(browserify({
-//  insertGlobals: true,
-//  debug: true
-//   }))
-//   .pipe(concat('bundled.js'))
-//   .pipe(uglify({
-//    // inSourceMap:
-//    // outSourceMap: "app.js.map"
-//  }))
-//   .pipe(gulp.dest('./dist/js'))
-// });
+
+
+
+
+//  ___   ___   _   _       __    ___   _        _____   __    __   _     __
+// | |_) | |_) | | | |\/|  / /\  | |_) \ \_/      | |   / /\  ( (` | |_/ ( (`
+// |_|   |_| \ |_| |_|  | /_/--\ |_| \  |_|       |_|  /_/--\ _)_) |_| \ _)_)
+
+// default task
+gulp.task('default',
+  	['lint', 'browserify']
+);
 
 gulp.task('watch', ['lint', 'browserify', 'sass', 'concat-vendor-css', 'connect'], function() {
 
@@ -147,15 +128,8 @@ gulp.task('watch', ['lint', 'browserify', 'sass', 'concat-vendor-css', 'connect'
 
 });
 
-
-
-
-// default task
-gulp.task('default',
-  	['lint', 'browserify']
-);
 // build task
-gulp.task('build',
-  	['lint', 'minify-css', 'browserifyDist', 'copy-html-files', 'copy-bower-components']
+gulp.task('dist',
+  	['lint', 'minify-css', 'browserifyDist', 'copy-html-files']
 );
 
