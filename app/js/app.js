@@ -6,21 +6,18 @@
 	require('angular');
 	require('angular-animate');
 	require('angular-loading-bar');
+	require('angular-leaflet-directive');
 	
 	
 
 	var mainController = require('./controllers/maincontroller');
+	var mapController = require('./controllers/mapcontroller');
 
-	var app = angular.module('whereInIllinois',['ngAnimate','angular-loading-bar']);
+	var app = angular.module('whereInIllinois',['ngAnimate','angular-loading-bar', 'leaflet-directive']);
 
-	// app.config(['$httpProvider', function($httpProvider) {
-	//         $httpProvider.defaults.useXDomain = true;
-	//         delete $httpProvider.defaults.headers.common['X-Requested-With'];
-	//     }
-	// ]);
 
 	app.controller('MainController', ['$scope', '$http', mainController]);
-
+	app.controller('MapController', ['$scope', '$http', mapController]);
 
 
 

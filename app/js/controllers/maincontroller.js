@@ -13,6 +13,14 @@ module.exports = function($scope, $http) {
 	var baseURL = "http://boundaries.tribapps.com/1.0/boundary/?";
 	var jsonpFormat = "&format=jsonp&callback=JSON_CALLBACK";
 
+	angular.extend($scope, {
+	    center: {
+	        lat: 0,
+	        lng: 0,
+	        zoom: 10
+	    }
+	});
+
 
 	$scope.getLocation = function(){
 		if (navigator.geolocation) {
@@ -25,15 +33,21 @@ module.exports = function($scope, $http) {
 
 	$scope.showPosition = function(position){
 		$scope.lat = position.coords.latitude;
-		$scope.lng = position.coords.longitude;
+		$scope.lng = position.coords.longitude;		
 		$scope.accuracy = position.coords.accuracy;
 		console.log("hi");
 		// $scope.apply();
 
+		$scope.center.lat = $scope.lat;
+		$scope.center.lng = $scope.lng;
+
 		console.log("longitude: " + $scope.lat);
 		console.log("latitude: " + $scope.lng);
 
+
 		requestLocationInfo($scope.lat, $scope.lng);
+
+
 
 	};
 

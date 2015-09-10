@@ -9,13 +9,21 @@
 		<!-- styles -->
 		<link rel="stylesheet" href="styles/vendor.css"/>
 		<link rel="stylesheet" href="styles/main.css"/>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
 		<!-- scripts -->
+	 	<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 		<script src="js/bundled.js"></script>
+
 	</head>
 
-	<body ng-controller="MainController">
+	<body class="ng-cloak">
 
-		<div class="container">
+		<div class="container" ng-controller="MapController">
+			
+		</div>
+		
+		<div class="container" ng-controller="MainController">
+			<leaflet center="center" width="100%" height="480px" ></leaflet>
 			<div class="row" ng-repeat="obj in locationData">
 				<div class=" kind three columns">{{obj.kind}}:</div>
 				<div class="nine columns">{{obj.name}}</div>
@@ -30,6 +38,6 @@
 		</div>
 
 
-
+	
 	</body>
 </html>
