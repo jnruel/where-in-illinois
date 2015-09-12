@@ -11,24 +11,25 @@ module.exports = function($scope, $http) {
 	console.log("successfully required!");
 
 	var baseURL = "http://boundaries.tribapps.com/1.0/boundary/?";
+	var boundarySetBaseURL = "http://boundaries.tribapps.com/1.0/boundary-set/?";
 	var jsonpFormat = "&format=jsonp&callback=JSON_CALLBACK";
 
 	angular.extend($scope, {
-	    center: {
-	        lat: 0,
-	        lng: 0,
-	        zoom: 10
-	    }
+		center: {
+			lat: 0,
+			lng: 0,
+			zoom: 10
+		}
 	});
 
 
 	$scope.getLocation = function(){
 		if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
-        }
-        else {
-            $scope.error = "Geolocation is not supported by this browser.";
-        }
+			navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+		}
+		else {
+			$scope.error = "Geolocation is not supported by this browser.";
+		}
 	};
 
 	$scope.showPosition = function(position){
@@ -57,22 +58,81 @@ module.exports = function($scope, $http) {
 		console.log(error);
 	};
 
+
+	function constructURL(){
+
+	}
+
 	function requestLocationInfo(latitude, longitude){
 		$http.jsonp(baseURL + "contains=" + latitude + "," + longitude + jsonpFormat).
-		  	then(function(response) {
-		  		$scope.locationData = response.data.objects;
-		  		console.log($scope.locationData);
-		  		console.log($scope.locationData[0].name);
+			then(function(response) {
+				$scope.locationData = response.data.objects;
+				console.log($scope.locationData);
+				console.log($scope.locationData[0].name);
+
+
+				angular.extend($scope,{
+					geojson: {
+						data: $scope.locationData[0].simple_shape,
+						style: {
+							fillColor: "green",
+							weight: 2,
+							opacity: 1,
+							color: 'white',
+							dashArray: '3',
+							fillOpacity: 0.7
+						}
+
+					}
+
+				});
 
 				// this callback will be called asynchronously
 				// when the response is available
-		  	}, function(response) {
+			}, function(response) {
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
-		  	});
+			});
 	}
 
-	$scope.getLocation();
+
+	$scope.getBoundarySet = function(set){
+		// set = "/" + set;
+		delete $http.defaults.headers.common['X-Requested-With'];
+		$http.get("http://boundaries.tribapps.com/1.0/boundary-set/census-places/").
+			then(function(response) {
+				console.log(response);
+				// $scope.locationData = response.data.objects;
+				// console.log($scope.locationData);
+				// console.log($scope.locationData[0].name);
+
+
+				// angular.extend($scope,{
+				// 	geojson: {
+				// 		data: $scope.locationData[0].simple_shape,
+				// 		style: {
+				// 			fillColor: "green",
+				// 			weight: 2,
+				// 			opacity: 1,
+				// 			color: 'white',
+				// 			dashArray: '3',
+				// 			fillOpacity: 0.7
+				// 		}
+
+				// 	}
+
+				// });
+
+				// this callback will be called asynchronously
+				// when the response is available
+			}, function(response) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			});
+	};
+
+	// $scope.getLocation();	
+	$scope.getBoundarySet("census-places");
 	
 
 };
