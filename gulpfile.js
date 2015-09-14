@@ -30,14 +30,14 @@ gulp.task('lint', function() {
 	.pipe(jshint.reporter('fail'));
 });
 
-gulp.task('minify-css', ['copy-vendor-css', 'sass'], function() {
+gulp.task('minify-css', ['sass'], function() {
 	var opts = {comments:true,spare:true};
 	// gulp.src(['./app/**/*.css', '!./app/bower_components/**'])
 	gulp.src('./app/styles/main.css')
 		.pipe(minifyCSS(opts))
 		.pipe(gulp.dest('./dist/styles/'));
 
-	gulp.src('./dist/styles/vendors/*.css')
+	gulp.src('./node_modules/angular-loading-bar/src/loading-bar.css')
 		.pipe(concat('vendor.css'))
 		.pipe(minifyCSS(opts))
 		.pipe(gulp.dest('./dist/styles'));
@@ -52,12 +52,12 @@ gulp.task('sass', function () {
 });
 
 gulp.task('copy-vendor-css', function(){
-	gulp.src(['./bower_components/normalize.css/normalize.css', './node_modules/angular-loading-bar/src/loading-bar.css'])
+	gulp.src(['./node_modules/angular-loading-bar/src/loading-bar.css'])
 	.pipe(gulp.dest('dist/styles/vendors'));
 });
 
 gulp.task('concat-vendor-css', function(){
-	gulp.src(['./bower_components/normalize.css/normalize.css', './node_modules/angular-loading-bar/src/loading-bar.css'])
+	gulp.src(['./node_modules/angular-loading-bar/src/loading-bar.css'])
 	.pipe(concat('vendor.css'))
 	.pipe(gulp.dest('./app/styles'));
 });

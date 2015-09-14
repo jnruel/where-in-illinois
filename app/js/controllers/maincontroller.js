@@ -14,13 +14,13 @@ module.exports = function($scope, $http) {
 	var boundarySetBaseURL = "http://boundaries.tribapps.com/1.0/boundary-set/?";
 	var jsonpFormat = "&format=jsonp&callback=JSON_CALLBACK";
 
-	angular.extend($scope, {
-		center: {
-			lat: 41.8726287,
-			lng: -87.6242065,
-			zoom: 11
-		}
-	});
+	// angular.extend($scope, {
+	// 	center: {
+	// 		lat: 41.8726287,
+	// 		lng: -87.6242065,
+	// 		zoom: 11
+	// 	}
+	// });
 
 
 	$scope.getLocation = function(){
@@ -39,9 +39,9 @@ module.exports = function($scope, $http) {
 		console.log("hi");
 		// $scope.apply();
 
-		$scope.center.lat = $scope.lat;
-		$scope.center.lng = $scope.lng;
-		$scope.center.zoom = 12;
+		// $scope.center.lat = $scope.lat;
+		// $scope.center.lng = $scope.lng;
+		// $scope.center.zoom = 12;
 
 		console.log("longitude: " + $scope.lat);
 		console.log("latitude: " + $scope.lng);
