@@ -16,9 +16,9 @@ module.exports = function($scope, $http) {
 
 	angular.extend($scope, {
 		center: {
-			lat: 0,
-			lng: 0,
-			zoom: 10
+			lat: 41.8726287,
+			lng: -87.6242065,
+			zoom: 11
 		}
 	});
 
@@ -41,6 +41,7 @@ module.exports = function($scope, $http) {
 
 		$scope.center.lat = $scope.lat;
 		$scope.center.lng = $scope.lng;
+		$scope.center.zoom = 12;
 
 		console.log("longitude: " + $scope.lat);
 		console.log("latitude: " + $scope.lng);
@@ -131,8 +132,8 @@ module.exports = function($scope, $http) {
 			});
 	};
 
-	// $scope.getLocation();	
-	$scope.getBoundarySet("census-places");
+	$scope.getLocation();	
+	// $scope.getBoundarySet("census-places");
 	
 
 };
